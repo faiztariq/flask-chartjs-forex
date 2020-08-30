@@ -1,0 +1,52 @@
+<!-- Canvas to contain the Chart -->
+<canvas id="myChart"></canvas>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type=text/javascript src="{{ url_for('static', filename='js/utils.js') }}"></script>
+
+<script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+        // The data for our dataset
+        data: modifyResponse({{ data | safe }}),
+        // Configuration options
+        options: { }
+    });
+</script>
+
+<!-- Filter Form -->
+<form action="/submit" method="post" role="form">
+    <div class="d-flex bd-highlight">
+        <div class="form-group p-2 flex-fill bd-highlight">
+            <label for="target-currency">Target Currency</label>
+            <select class="form-control" id="target-currency" name="target_currency" placeholder="Target Currency">
+                {% for curr in currencies %}
+                <option value="{{curr}}">{{curr}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group p-2 flex-fill bd-highlight">
+            <label for="base-currency">Base Currency</label>
+            <select class="form-control" id="base-currency" name="base_currency" placeholder="Base Currency">
+                {% for curr in currencies %}
+                <option value="{{curr}}">{{curr}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group p-2 flex-fill bd-highlight">
+            <label for="time-period">Time Period</label>
+            <select class="form-control" id="time-period" name="time_period" placeholder="Time Period">
+                {% for tp in time_period_list %}
+                <option value="{{tp}}">{{tp}}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
+    <div class="d-flex align-items-end flex-column bd-highlight mr-2">
+        <button type="submit" class="btn btn-primary bd-highlight">Submit</button>
+    </div>
+</form>
