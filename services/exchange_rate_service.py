@@ -1,9 +1,8 @@
-import requests
 from datetime import *
 from dateutil.relativedelta import *
 
 # Constants
-base_url = 'https://api.exchangeratesapi.io/'
+base_url = 'https://api.exchangerate.host/' #'https://api.exchangeratesapi.io/' - now requires API key
 month_offset = 1
 date_string_format = '%Y-%m-%d'
 today = date.today()
@@ -25,11 +24,11 @@ def get_currencies_last_month():
         :returns: Response
     """
     
-    api_type = 'history?'
+    api_type = 'timeseries?'
     start_at = today-relativedelta(months=month_offset)
     end_at = today.strftime(date_string_format)
     # Building URL
-    req_url = base_url + api_type + 'start_at=' + start_at.strftime(date_string_format) + '&end_at=' + end_at
+    req_url = base_url + api_type + 'start_date=' + start_at.strftime(date_string_format) + '&end_date=' + end_at
     return requests.get(req_url).json()['rates']
 
 def compare_currencies_period(target_curr, base_curr, time_per):
@@ -39,11 +38,11 @@ def compare_currencies_period(target_curr, base_curr, time_per):
         :returns: Response
     """
     
-    api_type = 'history?'
+    api_type = 'timeseries?'
     start_at = today-relativedelta(weeks=time_per)
     end_at = today.strftime(date_string_format)
     # Building URL
-    req_url = base_url + api_type + 'start_at=' + start_at.strftime(date_string_format) + '&end_at=' + end_at + '&symbols=' + target_curr + '&base=' + base_curr
+    req_url = base_url + api_type + 'start_date=' + start_at.strftime(date_string_format) + '&end_date=' + end_at + '&symbols=' + target_curr + '&base=' + base_curr
     return requests.get(req_url).json()['rates']
     
     

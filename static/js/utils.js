@@ -15,7 +15,7 @@ function randomRgb() {
  */
 var modifyResponse = function(response) {
     // Currency Names (Symbols)
-    const labels = Object.keys(response);
+    const labels = Object.keys(response[Object.keys(response)[0]]);
     const datasets = [];
     // Building Dataset
     Object.keys(response).forEach((date, index) => {
