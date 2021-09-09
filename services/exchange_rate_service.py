@@ -1,5 +1,6 @@
 from datetime import *
 from dateutil.relativedelta import *
+import requests
 
 # Constants
 base_url = 'https://api.exchangerate.host/' #'https://api.exchangeratesapi.io/' - now requires API key
